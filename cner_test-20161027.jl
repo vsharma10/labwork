@@ -4,7 +4,7 @@ using PyCall
 using StringDistances
 
 @pyimport nltk as ntk
-
+# Identify sentence boundaries
 function sentTokenization(txt, ntk, id, tiab)
   sent_arr = ntk.sent_tokenize(txt)
   for i in 1:length(sent_arr)
@@ -35,7 +35,7 @@ function sentTokenization(txt, ntk, id, tiab)
   end
   return nsent_arr
 end
-
+# Create an array of tokens
 function tokenarr(sent, lnarr, wmcarr)
   #csent = match(r"[0-9]+\:[0-9]+\$(.*)", sentstr)
   #sent = csent.captures[1]
@@ -236,7 +236,7 @@ function tokenarr(sent, lnarr, wmcarr)
   end
   return newarr
 end
-
+# Identify boundaries for chemicals with multiple words
 function forTokenization(spwordFile)
   lnarr = Any[]
   for ln in eachline(spwordFile)
@@ -245,7 +245,7 @@ function forTokenization(spwordFile)
   end
   return lnarr
 end
-
+# Non-chemical word list
 function ncwordList(wmcFile)
   wmcarr = Any[]
   for ln in eachline(wmcFile)
@@ -254,7 +254,7 @@ function ncwordList(wmcFile)
   end
   return wmcarr
 end
-
+# Find index for tokens
 function findindex(sent, token_arr)
   tokind_arr = Any[]
   sent1 = replace(sent, r"[^A-Za-z0-9]", "\*")
@@ -279,7 +279,7 @@ function findindex(sent, token_arr)
   tokind_arr = unique(tokind_arr)
   return tokind_arr
 end
-
+#Identify chemicals by rule matching
 function rulMatch(warr, chem_dict)
   scr = 0
   cwscr = 1
@@ -347,7 +347,7 @@ function checkDictionary(token, jo_array)
   end
   return scr
 end
-
+# Get key(s) for a given value in dictionary
 function getKey(dict, id)
   arr = Any[]
   for (k, v) in dict
@@ -358,7 +358,7 @@ function getKey(dict, id)
   return arr
 end
 
-
+# Expand chemical match to multiple words
 function multiword(abnew_arr)
 
   pvabnew_arr = abnew_arr
@@ -472,7 +472,7 @@ function getQuery(warr, chem_dict)
   qstr = join(str_arr, "\|")
   return qstr
 end
-
+# Approximate matching by using Levinshtein distance
 function lookupLevinDist(wrd, qry, rulDict)
   retarr = Any[]
   resarr = getKey(rulDict, qry)
@@ -491,7 +491,7 @@ function lookupLevinDist(wrd, qry, rulDict)
   end
   return res_arr
 end
-
+#Recognize chemicals for the token array
 function chemicalRecognition(tokind_arr)
   reschem_array = Any[]
   #tok_sort = sort_index(tokind_arr)
@@ -530,7 +530,7 @@ function chemicalRecognition(tokind_arr)
 end
 
 
-
+# Save chemical dictionary as array and dictionary
 dictFile = open("/Users/sharma/Desktop/BioCreativeV5/joChem/rule_dict_jochem-20161027-ascii.txt")
 rulDict = Dict{Any,Any}()
 jo_array = Any[]
