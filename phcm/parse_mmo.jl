@@ -56,8 +56,8 @@ ofile = ARGS[2]
 outFile = open("$ofile", "w")
 
 #mmoFile = readall("$file")
-
-sem_arr = ["acab", "anab", "comd", "cgab", "dsyn", "emod", "fndg", "inpo", "mobd", "neop", "patf"]
+# Semantic types of semantic group "DISORDERS"
+sem_arr = ["acab", "anab", "comd", "cgab", "dsyn", "emod", "fndg", "inpo", "mobd", "neop", "patf", "sosy"]
 
 for file in readdir(dir)
   if ismatch(r".*\.txt", file)
